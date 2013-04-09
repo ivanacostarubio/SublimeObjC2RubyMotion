@@ -1,0 +1,22 @@
+    NSDictionary *updatedLatte = [responseObject objectForKey:@"latte"];
+    [self updateFromJSON:updatedLatte];
+    [self notifyCreated];
+    [[BLAPIClient sharedClient] enqueueHTTPRequestOperation:operation];
+
+    [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemBookmarks tag: 0] autorelease];
+
+[[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+
+NSDictionary *updatedLatte = [responseObject objectForKey:@"latte"];
+
+Place *placeOne   = [[Place alloc] init];
+Place *placeTwo   = [[Place alloc] init];
+Place *placeThree = [[Place alloc] init];
+placeOne.name = @"Taco Cantina";
+placeTwo.name = @"Fish Town";
+placeThree.name = @"Envy Labs";
+placeOne.description   = @"Tasty tacos.";
+placeTwo.description   = @"Scrumptious sushi.";
+placeThree.description = @"Enviable educators.";
+
+[[UIAlertView alloc] initWithTitle:@"Warning" message:@"too many alerts"];

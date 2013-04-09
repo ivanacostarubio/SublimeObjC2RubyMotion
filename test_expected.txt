@@ -1,0 +1,22 @@
+    updatedLatte = responseObject.objectForKey("latte")
+    self.updateFromJSON(updatedLatte)
+    self.notifyCreated
+    BLAPIClient.sharedClient.enqueueHTTPRequestOperation(operation)
+
+    UITabBarItem.alloc.initWithTabBarSystemItem(UITabBarSystemItemBookmarks,tag:0)
+
+UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+
+updatedLatte = responseObject.objectForKey("latte")
+
+placeOne   = Place.alloc.init
+placeTwo   = Place.alloc.init
+placeThree = Place.alloc.init
+placeOne.name = "Taco Cantina"
+placeTwo.name = "Fish Town"
+placeThree.name = "Envy Labs"
+placeOne.description   = "Tasty tacos."
+placeTwo.description   = "Scrumptious sushi."
+placeThree.description = "Enviable educators."
+
+UIAlertView.alloc.initWithTitle("Warning",message:"too many alerts")
