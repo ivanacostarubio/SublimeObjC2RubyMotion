@@ -38,10 +38,32 @@ class TestBlock(unittest.TestCase):
         expected = """[UIView animateWithDuration:0.2 animations:^{view.alpha = 0.0;} completion:^(BOOL finished){ [view removeFromSuperview]; }];"""
         self.assertEqual(CodeConverter(source).multilines_to_one_line().s, expected)
 
-    def test_block_translation(self):
+    def test_block_without_args(self):
         source   = """[UIView animateWithDuration:0.2
                              animations:^{view.alpha = 0.0;}]"""
         expected = """[UIView animateWithDuration:0.2 animations:->{view.alpha = 0.0;}]"""
+        self.assertEqual(CodeConverter(source).multilines_to_one_line().convert_blocks().s, expected)
+
+    def test_block_with_one_args(self):
+        source   = """[UIView animateWithDuration:0.2
+                             animations:^{view.alpha = 0.0;}
+                             completion:^( BOOL finished ){ [view removeFromSuperview]; }];"""
+        expected = """[UIView animateWithDuration:0.2 animations:->{view.alpha = 0.0;} completion:->finished{ [view removeFromSuperview]; }];"""
+        self.assertEqual(CodeConverter(source).multilines_to_one_line().convert_blocks().s, expected)
+
+    def test_block_with_two_args(self):
+        source   = """[aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop){
+     if ([obj localizedCaseInsensitiveCompare:aString]==NSOrderedSame) {
+          NSLog(@"Object Found: %@", obj);
+          *stop = YES;
+     }
+} ];"""
+        expected = """[aSet enumerateObjectsUsingBlock:->|obj,stop|{
+     if ([obj localizedCaseInsensitiveCompare:aString]==NSOrderedSame) {
+          NSLog(@"Object Found: %@", obj);
+          *stop = YES;
+     }
+} ];"""
         self.assertEqual(CodeConverter(source).multilines_to_one_line().convert_blocks().s, expected)
 
 if __name__ == '__main__':
