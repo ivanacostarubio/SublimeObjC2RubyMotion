@@ -54,6 +54,7 @@ class CodeConverter(object):
 
     def restore_spaces_in_string(self):
         self.s = re.sub(r'__SPACE__', ' ', self.s)
+        return self
 
     def convert_blocks(self):
         self.s = re.sub(r'\^{', '->{', self.s)
