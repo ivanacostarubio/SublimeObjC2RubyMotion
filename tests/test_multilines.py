@@ -48,11 +48,11 @@ class TestMultilines(unittest.TestCase):
         [self setupBackground];
     }
 """
-        expected = """    if (self) {
+        expected = """    if self
         self.addMainLabel
         self.addSubLabel
         self.setupBackground
-    }
+    end
 """
         result = CodeConverter(source).result()
         self.assertEqual(result, expected)

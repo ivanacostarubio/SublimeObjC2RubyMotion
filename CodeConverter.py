@@ -10,6 +10,7 @@ class CodeConverter(object):
         self.mark_spaces_in_string()
         self.convert_blocks()
         self.convert_square_brackets_expression()
+        self.convert_conditions()
         self.remove_semicolon_at_the_end()
         self.remove_autorelease()
         self.remove_type_declaration()
@@ -38,6 +39,9 @@ class CodeConverter(object):
     def convert_block_with_args(self, matchobj):
         args = self.convert_block_args(matchobj.group(1))
         return "->%s{%s}" % (args, matchobj.group(2))
+
+    def convert_if_condition(self, matchobj):
+        return "if %s%send" % (matchobj.group(1), matchobj.group(2))
 
     def ruby_style_code(self, matchobj):
         msg = re.sub(r'([^:]+)\:\s*(.+)', self.convert_args, matchobj.group(2))
@@ -73,6 +77,10 @@ class CodeConverter(object):
 
     def convert_blocks(self):
         self.s = re.sub(r'\^\s*(\([^)]+\))?\s*{([^}]+)}', self.convert_block_with_args, self.s)
+        return self
+
+    def convert_conditions(self):
+        self.s = re.sub(r'if\s*\(([^)]+)\)\s*{([^}]+)}', self.convert_if_condition, self.s)
         return self
 
     def convert_square_brackets_expression(self):
